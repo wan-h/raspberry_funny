@@ -1,0 +1,11 @@
+.idea
+.cache
+.vscode
+*.pyc
+__pycache__
+.pytest_cache
+runs
+cmake-build-debug
+*.bin
+*.param
+build
