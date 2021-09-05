@@ -1,5 +1,6 @@
 #include "detector.h"
 #include "net.h"
+#include <iostream>
 
 template<class T>
 const T& clamp(const T& v, const T& lo, const T& hi)
@@ -112,9 +113,9 @@ cv::Mat Detector::draw(const cv::Mat& bgr, const std::vector<Object>& objects)
                         cv::FONT_HERSHEY_SIMPLEX, 0.5, cv::Scalar(0, 0, 0));
         }
     }
-
+    cv::namedWindow("image", 1);
     cv::imshow("image", image);
-    cv::waitKey(0);
+    cv::waitKey(1);
     return image;
 }
 }
