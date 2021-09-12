@@ -22,7 +22,8 @@ link_directories(${NCNN_INSTALL}/lib)
 
 add_subdirectory(detector)
 add_subdirectory(camera)
-list(APPEND EXTRA_LIBS detector camera)
+add_subdirectory(buzzer)
+list(APPEND EXTRA_LIBS detector camera buzzer)
 
 add_executable(funny main.cpp)
 target_link_libraries(funny ${EXTRA_LIBS})
