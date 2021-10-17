@@ -37,9 +37,13 @@ Buzzer::Buzzer(){
     assert(wiringPiSetup() != -1);
     assert(softToneCreate(BuzPin) != -1);
 }
-int Buzzer::doubleClock(){
+void Buzzer::doubleClock(){
     softToneWrite(BuzPin, CH7);	
-	delay(500);
-    softToneWrite(BuzPin, CH7);
+	delay(50);
+    softToneWrite(BuzPin, 0);	
+	delay(100);
+    softToneWrite(BuzPin, CH7);	
+	delay(50);
+    softToneWrite(BuzPin, 0);	
 }
 }

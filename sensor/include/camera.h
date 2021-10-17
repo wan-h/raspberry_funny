@@ -9,15 +9,16 @@
 #include <string>
 #include <queue>
 
-namespace cam {
-    class Camera
-    {
-    private:
-        std::queue<cv::Mat> Q;
-    public:
-        Camera(const char* address);
-        cv::Mat get();
-    };
+namespace sensor {
+class Camera
+{
+private:
+    std::queue<cv::Mat> Q;
+public:
+    Camera(const int deviceID);
+    Camera(const char* address);
+    cv::Mat get_frame();
+};
 }
 
 #endif

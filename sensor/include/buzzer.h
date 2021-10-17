@@ -6,7 +6,7 @@ namespace sensor {
     {
     public:
         Buzzer();
-        static int doubleClock();
+        void doubleClock();
     };
 }
 

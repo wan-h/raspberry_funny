@@ -1,5 +1,6 @@
-add_library(detector detector.cpp)
+project(detector)
 
-# 表示任何需要链接到该库的目标需要包含该资源目录找到 .h 文件
+add_library(detector UltraFace.cpp)
 target_include_directories(detector PUBLIC ${CMAKE_CURRENT_SOURCE_DIR} ${NCNN_INSTALL}/include/ncnn ${OpenCV_INCLUDE_DIRS}) 
+target_link_directories(detector PUBLIC ${NCNN_INSTALL}/lib)
 target_link_libraries(detector ncnn ${OpenCV_LIBS})

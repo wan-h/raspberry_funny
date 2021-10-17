@@ -4,9 +4,9 @@
 #include <opencv2/core/core.hpp>
 #include <opencv2/highgui/highgui.hpp>
 #include <opencv2/imgproc/imgproc.hpp>
-#include <stdio.h>
 #include <vector>
 #include <string>
+#include "net.h"
 
 struct Object
 {
@@ -19,10 +19,9 @@ namespace det {
     class Detector
     {
     private:
-        const char* paramFile;
-        const char* binFile;
+        ncnn::Net detector;
     public:
-        // Detector();
+        // Detector();s
         // ~Detector();
         Detector(const char* param_file, const char* bin_file);
         int detect(const cv::Mat& bgr, std::vector<Object>& objects);

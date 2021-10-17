@@ -1,5 +1,8 @@
 #include "detector.h"
 #include "net.h"
+#if NCNN_VULKAN
+#include "gpu.h"
+#endif // NCNN_VULKAN
 #include <iostream>
 
 template<class T>
@@ -11,20 +14,14 @@ const T& clamp(const T& v, const T& lo, const T& hi)
 
 namespace det{
 Detector::Detector(const char* param_file, const char* bin_file){
-    paramFile = param_file;
-    binFile = bin_file;
-}
-int Detector::detect(const cv::Mat& bgr, std::vector<Object>& objects){
-    ncnn::Net net;
-
-#if NCNN_VULKAN
-    net.opt.use_vulkan_compute = true;
-#endif // NCNN_VULKAN
+    detector.opt.use_vulkan_compute = true;
 
     // converted ncnn model from https://github.com/ujsyehao/mobilenetv3-ssd
-    net.load_param(paramFile);
-    net.load_model(binFile);
+    detector.load_param(param_file);
+    detector.load_model(bin_file);
 
+}
+int Detector::detect(const cv::Mat& bgr, std::vector<Object>& objects){
     const int target_size = 300;
 
     int img_w = bgr.cols;
@@ -36,7 +33,7 @@ int Detector::detect(const cv::Mat& bgr, std::vector<Object>& objects){
     const float norm_vals[3] = {1.0f, 1.0f, 1.0f};
     in.substract_mean_normalize(mean_vals, norm_vals);
 
-    ncnn::Extractor ex = net.create_extractor();
+    ncnn::Extractor ex = detector.create_extractor();
 
     ex.input("input", in);
 
@@ -113,9 +110,6 @@ cv::Mat Detector::draw(const cv::Mat& bgr, const std::vector<Object>& objects)
                         cv::FONT_HERSHEY_SIMPLEX, 0.5, cv::Scalar(0, 0, 0));
         }
     }
-    cv::namedWindow("image", 1);
-    cv::imshow("image", image);
-    cv::waitKey(1);
     return image;
 }
 }

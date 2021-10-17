@@ -4,7 +4,7 @@ cmake_minimum_required(VERSION 3.10)
 project(raspberry_funny VERSION 1.0)
 
 # 设置ncnn安装位置
-set(NCNN_INSTALL "/home/wan/workspace/code/ncnn/build/install" CACHE INTERNAL "")
+set(NCNN_INSTALL "/home/pi/workspace/ncnn/build/install" CACHE INTERNAL "")
 message(STATUS "NCNN library: ${NCNN_INSTALL}")
 
 # 调用opencv
@@ -17,13 +17,12 @@ if(OPENMP_FOUND)
     set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} ${OpenMP_EXE_LINKER_FLAGS}")  
 endif()
 
-# 包含的链接库路径
-link_directories(${NCNN_INSTALL}/lib)
 
 add_subdirectory(detector)
-add_subdirectory(camera)
-add_subdirectory(buzzer)
-list(APPEND EXTRA_LIBS detector camera buzzer)
+add_subdirectory(sensor)
+add_subdirectory(controller)
+add_subdirectory(config)
+list(APPEND EXTRA_LIBS sensor controller config detector)
 
 add_executable(funny main.cpp)
 target_link_libraries(funny ${EXTRA_LIBS})
